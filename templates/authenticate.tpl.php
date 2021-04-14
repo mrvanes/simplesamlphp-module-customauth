@@ -56,6 +56,7 @@
             attributes += "<input id=chkbx_" + key + " type=checkbox name=keys[" + key + "] " + (keys[key]?'checked':'') + ">" + key + "<br>\n";
         }
         $('#attributes').html(attributes);
+        $('#explanation').html('');
         $('input[id^=chkbx_]').change(function() {
             var key = this.name.slice(5,-1);
             keys[key] = this.checked;
