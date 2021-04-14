@@ -8,19 +8,16 @@
   <body>
     <h1>CustomAuth login page</h1>
     <form method="post" action="?">
-      <p>
-        Choose User profile:
-      <p>
+    <p><b>Choose User profile</b><p>
 <?php
     foreach ($this->data['users'] as $user => $values) {
         echo "<input type=radio name=username value='$user'> " . $values['displayName'] . "<br>\n";
     }
 ?>
       <div id=attributes></div>
-      <input type="hidden" name="ReturnTo" value="<?= htmlspecialchars($this->data['returnTo']) ?>">
-    <h3>Released attributes</h3>
       <div id='output'></div>
-      <p><input type="submit" value="Log in"></p>
+    <input type="hidden" name="ReturnTo" value="<?= htmlspecialchars($this->data['returnTo']) ?>">
+    <p><input type="submit" value="Log in"></p>
     </form>
   </body>
 
@@ -39,7 +36,7 @@
 
 ?>
     function update() {
-        var html = "";
+        var html = "<p><b>Released attributes</b></p>\n";
         for (let key in users[user]) {
             if (keys[key]) {
                 html += key + ": " + users[user][key] + "<br>\n";
@@ -49,7 +46,7 @@
 
     };
     $('input[type=radio][name=username]').change(function() {
-        var attributes = "";
+        var attributes = "<p><b>Choose attributes</b></p>\n";
         user = this.value;
         for (let key in users[user]) {
             attribute = users[user][key];
