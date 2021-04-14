@@ -28,12 +28,14 @@
 
   <script>
     var users = [];
+    var keys = [];
     var user = '';
 <?php
     foreach ($this->data['users'] as $user => $values) {
         echo "users['$user'] = [];\n";
         foreach ($values as $key => $value) {
             echo "users['$user']['$key'] = '$value';\n";
+            echo "keys['$key'] = true;";
         }
     }
 
@@ -43,7 +45,10 @@
         for (let key in users[user]) {
             var checkbox = $("input[type=checkbox][name='attr[" + key + "]']");
             if (checkbox.prop('checked')) {
+                keys[key] = true;
                 html += key + ": " + users[user][key] + "<br>\n";
+            } else {
+              keys[key] = false;
             }
         }
         $('#output').html(html);
@@ -54,7 +59,7 @@
         user = this.value;
         for (let key in users[user]) {
             attribute = users[user][key];
-            attributes += "<input type=checkbox name=attr[" + key + "] checked>" + key + "<br>\n";
+            attributes += "<input type=checkbox name=attr[" + key + "] " + (keys[key]?'checked':'') + ">" + key + "<br>\n";
         }
         $('#attributes').html(attributes);
         update();
