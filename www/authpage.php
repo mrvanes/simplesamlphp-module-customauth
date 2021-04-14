@@ -38,18 +38,16 @@ if (!preg_match('@State=(.*)@', $returnTo, $matches)) {
 // our list of users.
 $users = [
     'student' => [
-        'password' => 'student',
         'uid' => 'student',
-        'name' => 'Student Name',
+        'displayName' => 'Student Name',
         'mail' => 'somestudent@example.org',
-        'type' => 'student',
+        'eduPersonAffiliation' => 'student',
     ],
     'admin' => [
-        'password' => 'admin',
         'uid' => 'admin',
-        'name' => 'Admin Name',
+        'displayName' => 'Admin Name',
         'mail' => 'someadmin@example.org',
-        'type' => 'employee',
+        'eduPersonAffiliation' => 'employee',
     ],
 ];
 
@@ -58,17 +56,18 @@ $badUserPass = false;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = (string) $_REQUEST['username'];
 
-    $user = $users[$username];
+    $user_aa = $users[$username];
 
     if (!session_id()) {
         // session_start not called before. Do it here.
         session_start();
     }
 
-    $_SESSION['uid'] = $user['uid'];
-    $_SESSION['name'] = $user['name'];
-    $_SESSION['mail'] = $user['mail'];
-    $_SESSION['type'] = $user['type'];
+    foreach ($user_aa as $key => $value) {
+        if (isset($_POST['attr'][$key])) {
+            $_SESSION['attributes'][$key] = $value;
+        }
+    }
 
     \SimpleSAML\Utils\HTTP::redirectTrustedURL($returnTo);
 }

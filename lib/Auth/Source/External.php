@@ -73,28 +73,15 @@ class External extends \SimpleSAML\Auth\Source
             session_start();
         }
 
-        if (!isset($_SESSION['uid'])) {
-            // The user isn't authenticated
-            return null;
-        }
-
         /*
          * Find the attributes for the user.
          * Note that all attributes in SimpleSAMLphp are multivalued, so we need
          * to store them as arrays.
          */
 
-        $attributes = [
-            'uid' => [$_SESSION['uid']],
-            'displayName' => [$_SESSION['name']],
-            'mail' => [$_SESSION['mail']],
-        ];
-
-        // Here we generate a multivalued attribute based on the account type
-        $attributes['eduPersonAffiliation'] = [
-            $_SESSION['type'], /* In this example, either 'student' or 'employee'. */
-            'member',
-        ];
+        foreach($_SESSION['attributes'] as $key => $value) {
+            $attributes[$key] = [$value];
+        }
 
         return $attributes;
     }
@@ -282,7 +269,7 @@ class External extends \SimpleSAML\Auth\Source
         /*
          * In this example we simply remove the 'uid' from the session.
          */
-        unset($_SESSION['uid']);
+        unset($_SESSION['attributes']);
 
         /*
          * If we need to do a redirect to a different page, we could do this
