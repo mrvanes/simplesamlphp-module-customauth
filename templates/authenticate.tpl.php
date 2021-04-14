@@ -15,10 +15,10 @@
     }
 ?>
     <p><b>Choose attributes</b></p>
-      <div style='float: left' id=attributes></div>
-      <div  id=explanation></div><br style='clear: both' />
+      <div style="float: left" id="attributes"></div>
+      <div  id="explanation"></div><br style="clear: both" />
     <p><b>Released attributes</b></p>
-      <div style='id='output'></div>
+      <div id="output"></div>
     <input type="hidden" name="ReturnTo" value="<?= htmlspecialchars($this->data['returnTo']) ?>">
     <p><input type="submit" value="Log in"></p>
     </form>
@@ -54,7 +54,7 @@
         for (let key in users[user]) {
             attribute = users[user][key];
             attributes += "<input id=chkbx_" + key + " type=checkbox name=keys[" + key + "] " + (keys[key]?'checked':'') + ">" + key + "<br>\n";
-        }
+        };
         $('#attributes').html(attributes);
         $('#explanation').html('');
         $('input[id^=chkbx_]').change(function() {
