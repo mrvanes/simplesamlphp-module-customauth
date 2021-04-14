@@ -14,8 +14,11 @@
         echo "<input type=radio name=username value='$user'> " . $values['displayName'] . "<br>\n";
     }
 ?>
-      <div id=attributes></div>
-      <div id='output'></div>
+    <p><b>Choose attributes</b></p>
+      <div style='float: left' id=attributes></div>
+      <div  id=explanation></div><br style='clear: both' />
+    <p><b>Released attributes</b></p>
+      <div style='id='output'></div>
     <input type="hidden" name="ReturnTo" value="<?= htmlspecialchars($this->data['returnTo']) ?>">
     <p><input type="submit" value="Log in"></p>
     </form>
@@ -36,17 +39,17 @@
 
 ?>
     function update() {
-        var html = "<p><b>Released attributes</b></p>\n";
+        var html = "";
         for (let key in users[user]) {
             if (keys[key]) {
-                html += key + ": " + users[user][key] + "<br>\n";
+                html += key + ": " + users[user][key] + "<br />\n";
             }
         }
         $('#output').html(html);
 
     };
     $('input[type=radio][name=username]').change(function() {
-        var attributes = "<p><b>Choose attributes</b></p>\n";
+        var attributes = "";
         user = this.value;
         for (let key in users[user]) {
             attribute = users[user][key];
@@ -56,6 +59,8 @@
         $('input[id^=chkbx_]').change(function() {
             var key = this.name.slice(5,-1);
             keys[key] = this.checked;
+            if (this.checked) $('#explanation').html('Ah! You enabled ' + key + '!<br />\nIt\'s allways good to enable ' + key + ', because it\'s good you know!');
+            else $('#explanation').html('Never disable ' + key + '! You should leave it there.<br />No good will come from disabling ' + key + '!');
         });
         update();
     });
