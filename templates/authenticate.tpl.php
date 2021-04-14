@@ -18,9 +18,7 @@
 ?>
       <div id=attributes></div>
       <input type="hidden" name="ReturnTo" value="<?= htmlspecialchars($this->data['returnTo']) ?>">
-    <p>
-        Released attributes
-    </p>
+    <h3>Released attributes</h3>
       <div id='output'></div>
       <p><input type="submit" value="Log in"></p>
     </form>
@@ -43,12 +41,8 @@
     function update() {
         var html = "";
         for (let key in users[user]) {
-            var checkbox = $("input[type=checkbox][name='attr[" + key + "]']");
-            if (checkbox.prop('checked')) {
-                keys[key] = true;
+            if (keys[key]) {
                 html += key + ": " + users[user][key] + "<br>\n";
-            } else {
-              keys[key] = false;
             }
         }
         $('#output').html(html);
@@ -59,9 +53,13 @@
         user = this.value;
         for (let key in users[user]) {
             attribute = users[user][key];
-            attributes += "<input type=checkbox name=attr[" + key + "] " + (keys[key]?'checked':'') + ">" + key + "<br>\n";
+            attributes += "<input id=chkbx_" + key + " type=checkbox name=keys[" + key + "] " + (keys[key]?'checked':'') + ">" + key + "<br>\n";
         }
         $('#attributes').html(attributes);
+        $('input[id^=chkbx_]').change(function() {
+            var key = this.name.slice(5,-1);
+            keys[key] = this.checked;
+        });
         update();
     });
 

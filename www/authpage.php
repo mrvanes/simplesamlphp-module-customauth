@@ -64,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     foreach ($user_aa as $key => $value) {
-        if (isset($_POST['attr'][$key])) {
+        if (isset($_POST['keys'][$key])) {
             $_SESSION['attributes'][$key] = $value;
         }
     }
